@@ -1,3 +1,4 @@
+const { nanoid } = require('nanoid')
 const low = require('lowdb')
 const FileSync = require('lowdb/adapters/FileSync')
 
@@ -9,12 +10,15 @@ const handleError = (err) => {
 }
 
 exports.addClient = async (req, res) => {
-  await db.get('clients').push({ id: 1, name: 'studio czyk' }).write()
+  const data = req.body
+  data.id = nanoid()
 
-  res.status(200).json({ success: true, msg: 'added new client' })
+  await db.get('clients').push(data).write()
+
+  res.status(200).json({ success: true, msg: 'added client' })
 }
 
-exports.getAllClients = async (req, res) => {
+exports.getAll = async (req, res) => {
   try {
     const clients = await db.get('clients').value()
 
@@ -24,17 +28,37 @@ exports.getAllClients = async (req, res) => {
   }
 }
 
-exports.getClient = async (req, res) => {
+exports.getOne = async (req, res) => {
   const id = req.params.id
 
-  const client = await db
-    .get('clients')
-    .find({ id: parseInt(id) })
-    .value()
+  const client = await db.get('clients').find({ id: id }).value()
 
   if (client) {
     res.status(200).json({ client: client })
   } else {
     res.status(404).json({ success: false, msg: 'No client with this ID' })
+  }
+}
+
+exports.update = async (req, res) => {
+  const id = req.params.id
+  const data = req.body
+
+  try {
+    await db.get('clients').find({ id: id }).assign(data).write()
+    res.status(200).json({ success: true, msg: 'updated client' })
+  } catch {
+    res.status(500).json({ success: false, msg: 'An error occured' })
+  }
+}
+
+exports.remove = async (req, res) => {
+  const id = req.params.id
+
+  try {
+    await db.get('clients').remove({ id: id }).write()
+    res.status(200).json({ success: true, msg: 'deleted client' })
+  } catch {
+    res.status(500).json({ success: false, msg: 'An error occured' })
   }
 }

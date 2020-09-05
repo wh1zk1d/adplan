@@ -4,7 +4,7 @@ const router = require('express').Router()
 
 // Import subroutes
 const add = require('./addClient')
-const getClients = require('./getClient')
+const clients = require('./getClient')
 
 // Default route
 router.get('/', (req, res) => {
@@ -12,6 +12,6 @@ router.get('/', (req, res) => {
 })
 
 router.use('/add', add)
-router.use('/clients', getClients)
+router.use('/clients', clients)
 
 module.exports = router

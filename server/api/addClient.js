@@ -2,6 +2,6 @@
 const router = require('express').Router()
 const { addClient } = require('../db/controllers/actions.controller')
 
-router.get('/', addClient)
+router.post('/', addClient)
 
 module.exports = router
