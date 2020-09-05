@@ -3,10 +3,14 @@ require('dotenv').config()
 
 const express = require('express')
 const app = express()
+const cors = require('cors')
 
 const PORT = process.env.PORT || 3001
 
 // ROUTES
+// Enable CORS
+app.use(cors())
+
 // Enable JSON and URL encoded body parsing
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
