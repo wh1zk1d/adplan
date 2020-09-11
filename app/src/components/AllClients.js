@@ -27,7 +27,7 @@ const AllClients = () => {
 
   return (
     <div>
-      <h1 style={{ color: 'var(--primary)' }}>Übersicht</h1>
+      <h1 className='page-title'>Dashboard</h1>
 
       <table>
         <thead>
@@ -35,16 +35,34 @@ const AllClients = () => {
             <th>Aktiv</th>
             <th>Kunde</th>
             <th>Abdeckung</th>
-            <th>Rhytmus</th>
+            <th>Rhythmus</th>
+            <th>Spotlänge</th>
+            <th>Foyer</th>
+            <th>Startdatum</th>
+            <th>Enddatum</th>
+            <th>Kosten</th>
+            <th>Vertrag</th>
           </tr>
         </thead>
         <tbody>
           {clients.map((client) => (
             <tr key={client.id}>
-              <td>{client.active ? 'Ja' : 'Nein'}</td>
+              <td>
+                {client.active ? (
+                  <span className='active-yes'>Ja</span>
+                ) : (
+                  <span className='active-no'>Nein</span>
+                )}
+              </td>
               <td>{client.name}</td>
-              <td>{client.coverage}</td>
+              <td>{client.coverage}%</td>
               <td>{client.cycle}</td>
+              <td>{client.spotLength}</td>
+              <td>{client.showInFoyer ? 'Ja' : 'Nein'}</td>
+              <td>{client.startDate}</td>
+              <td>{client.endDate ? client.endDate : 'Unbegrenzt'}</td>
+              <td>{client.costs}€</td>
+              <td>Anzeigen</td>
             </tr>
           ))}
         </tbody>
