@@ -33,7 +33,7 @@ const Header = styled.header`
 `
 
 const Footer = styled.footer`
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   padding: 32px 0;
 `
 
@@ -53,9 +53,6 @@ const Layout = ({ children }) => {
           <NavLink to='/' activeClassName='menu-item_active'>
             Dashboard
           </NavLink>
-          <NavLink to='/new' activeClassName='menu-item_active'>
-            Kunde anlegen
-          </NavLink>
           <NavLink to='/settings' activeClassName='menu-item_active'>
             Einstellungen
           </NavLink>
@@ -65,16 +62,10 @@ const Layout = ({ children }) => {
       <main>{children}</main>
 
       <Footer>
-        <a
-          href='https://github.com/wh1zk1d'
-          target='_blank'
-          rel='noopener noreferrer'
-          title='Check me out on GitHub'>
-          <span role='img' aria-label='Avocado emoji'>
-            🥑
-          </span>{' '}
-          Made by wh1zk1d
-        </a>
+        <span role='img' aria-label='Avocado emoji'>
+          🥑
+        </span>{' '}
+        v1.0
       </Footer>
     </Container>
   )

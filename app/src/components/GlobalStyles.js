@@ -1,11 +1,11 @@
 import { createGlobalStyle } from 'styled-components'
-import 'typeface-source-sans-pro'
+import 'typeface-inter'
 
 const GlobalStyle = createGlobalStyle`
   :root {
     --bg: #fff;
     --text: #1a2a3a;
-    --primary: #00916e;
+    --primary: #0071e3;
   }
 
   * {
@@ -32,7 +32,7 @@ const GlobalStyle = createGlobalStyle`
 
     background: var(--bg);
     color: var(--text);
-    font-family: 'Source Sans Pro', sans-serif;
+    font-family: 'Inter', sans-serif;
     font-size: 1.6rem;
   }
 
@@ -61,8 +61,15 @@ const GlobalStyle = createGlobalStyle`
   /* TYPOGRAPHY */
   .page-title {
     color: var(--primary);
-    font-weight: 400;
+    font-size: 2.8rem;
+    font-weight: 600;
     margin: 16px 0 32px 0;
+  }
+
+  .underdotted {
+    border-bottom: 1px dotted var(--text);
+    cursor: pointer;
+    padding-bottom: 2px;
   }
 
   /* TABLE */
@@ -72,23 +79,20 @@ const GlobalStyle = createGlobalStyle`
   }
 
   td, th {
-    padding: 8px 16px;
+    padding: 16px;
   }
 
   th {
-    background: #4a5a6a;
-    border: 1px solid #7a8a9a;
-    color: #fff;
+    border-bottom: 1px solid var(--text);
+    text-align: left;
   }
 
   td {
     font-size: 1.4rem;
-    border: 1px solid #7a8a9a;
-    text-align: center;
   }
 
   tr:nth-child(even) {
-    background: #efefef;
+    background: #f3f3f3;
   }
 
   .active-yes {
