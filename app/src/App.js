@@ -1,12 +1,22 @@
 import React from 'react'
-import Layout from './components/Layout'
+import { Route, Switch } from 'react-router-dom'
+import Layout from './components/ui/Layout'
 
 import Clients from './components/AllClients'
+import AddClient from './components/AddClient'
 
 const App = () => {
   return (
     <Layout>
-      <Clients />
+      <Switch>
+        <Route exact path='/'>
+          <Clients />
+        </Route>
+
+        <Route exact path='/add'>
+          <AddClient />
+        </Route>
+      </Switch>
     </Layout>
   )
 }

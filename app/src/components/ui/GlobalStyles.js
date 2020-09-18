@@ -3,9 +3,9 @@ import 'typeface-inter'
 
 const GlobalStyle = createGlobalStyle`
   :root {
-    --bg: #fff;
-    --text: #1a2a3a;
-    --primary: tomato;
+    --bg: #f9fafb;
+    --text: #161e2e;
+    --primary: #1c64f2;
   }
 
   * {
@@ -55,21 +55,33 @@ const GlobalStyle = createGlobalStyle`
   /* MENU */
   .menu-item_active {
     color: var(--primary);
-    font-weight: 600;
+  }
+
+  nav a {
+    font-weight: 500;
   }
 
   /* TYPOGRAPHY */
   .page-title {
-    color: var(--primary);
     font-size: 2.4rem;
-    font-weight: 600;
-    margin: 16px 0 32px 0;
+    font-weight: 500;
+    letter-spacing: -0.015em;
+    margin: 0 0 48px 0;
   }
 
   .underdotted {
     border-bottom: 1px dotted var(--text);
     cursor: pointer;
     padding-bottom: 2px;
+  }
+
+  .text-link {
+    color: var(--primary);
+    font-weight: 600;
+
+    &:hover {
+      filter: brightness(80%);
+    }
   }
 
   /* TABLE */
@@ -84,6 +96,7 @@ const GlobalStyle = createGlobalStyle`
 
   th {
     border-bottom: 1px solid var(--text);
+    font-weight: 500;
     text-align: left;
   }
 
@@ -103,6 +116,63 @@ const GlobalStyle = createGlobalStyle`
   .active-no {
     color: tomato;
     font-weight: 600;
+  }
+
+  /* FLEX/GRID */
+  .flex-between {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+
+  /* FORMS */
+  input:not([type="checkbox"]), select {
+    border-radius: 6px;
+    border: 1px solid #7a8a9a;
+    color: inherit;
+    display: block;
+    font-family: inherit;
+    padding: 8px;
+    width: 24rem;
+
+    &:focus {
+      outline: 0 none;
+    }
+  }
+
+  input[type="checkbox"] {
+    margin-right: .5rem;
+  }
+
+  input + label,
+  select + label,
+  div + label {
+    margin-top: 32px;
+  }
+
+  label {
+    display: inline-block;
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+
+  button[type="submit"] {
+    background: var(--primary);
+    border: 0 none;
+    border-radius: .5rem;
+    color: #fff;
+    display: block;
+    font-weight: 500;
+    margin-top: 48px;
+    padding: 1.25rem 2.75rem;
+
+    &:focus {
+      outline: 0 none;
+    }
+
+    &:hover {
+      filter: brightness(110%) saturate(110%);
+    }
   }
 `
 

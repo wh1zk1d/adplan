@@ -1,6 +1,9 @@
 import React from 'react'
 import { useQuery } from 'react-query'
+import { Link } from 'react-router-dom'
 import API from '../utils/api'
+
+import Card from './ui/Card'
 
 const AllClients = () => {
   const { isLoading, error, data } = useQuery('fetchClients', async () => {
@@ -11,10 +14,14 @@ const AllClients = () => {
   })
 
   return (
-    <div>
-      <h1 className='page-title'>Dashboard</h1>
+    <Card>
+      <div className='flex-between'>
+        <h1 className='page-title'>Kunden</h1>
 
-      <button>Kunde hinzufügen</button>
+        <Link to='/add' className='text-link'>
+          Kunde hinzufügen +
+        </Link>
+      </div>
 
       {error && 'Ein Fehler ist aufgetreten'}
 
@@ -51,7 +58,11 @@ const AllClients = () => {
                 <td>{client.cycle}</td>
                 <td>{client.spotLength}sek</td>
                 <td>{client.showInFoyer ? 'Ja' : 'Nein'}</td>
-                <td>{client.startDate}</td>
+                <td>
+                  {new Intl.DateTimeFormat('de-DE', { dateStyle: 'medium' }).format(
+                    new Date(client.startDate)
+                  )}
+                </td>
                 <td>{client.endDate ? client.endDate : 'Unbegrenzt'}</td>
                 <td>{client.costs}€</td>
                 <td>
@@ -69,7 +80,7 @@ const AllClients = () => {
           </tbody>
         </table>
       )}
-    </div>
+    </Card>
   )
 }
 
