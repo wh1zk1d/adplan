@@ -5,7 +5,7 @@ const GlobalStyle = createGlobalStyle`
   :root {
     --bg: #fff;
     --text: #1a2a3a;
-    --primary: #0071e3;
+    --primary: tomato;
   }
 
   * {
@@ -61,7 +61,7 @@ const GlobalStyle = createGlobalStyle`
   /* TYPOGRAPHY */
   .page-title {
     color: var(--primary);
-    font-size: 2.8rem;
+    font-size: 2.4rem;
     font-weight: 600;
     margin: 16px 0 32px 0;
   }

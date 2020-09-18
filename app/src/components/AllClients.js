@@ -1,27 +1,14 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
+import { useQuery } from 'react-query'
 import API from '../utils/api'
 
 const AllClients = () => {
-  const [loading, setLoading] = useState(true)
-  const [clients, setClients] = useState(null)
-  const [error, setError] = useState(false)
-
-  useEffect(() => {
-    const getClients = async () => {
-      try {
-        const {
-          data: { clients },
-        } = await API.get('/clients')
-        setClients(clients)
-        setLoading(false)
-      } catch (err) {
-        setError(true)
-        setLoading(false)
-      }
-    }
-
-    getClients()
-  }, [])
+  const { isLoading, error, data } = useQuery('fetchClients', async () => {
+    const {
+      data: { clients },
+    } = await API.get('/clients')
+    return clients
+  })
 
   return (
     <div>
@@ -31,8 +18,8 @@ const AllClients = () => {
 
       {error && 'Ein Fehler ist aufgetreten'}
 
-      {loading ? (
-        'Lade Daten...'
+      {isLoading ? (
+        'Lade Kunden...'
       ) : (
         <table>
           <thead>
@@ -50,7 +37,7 @@ const AllClients = () => {
             </tr>
           </thead>
           <tbody>
-            {clients.map((client) => (
+            {data.map((client) => (
               <tr key={client.id}>
                 <td>
                   {client.active ? (
