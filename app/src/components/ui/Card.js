@@ -7,6 +7,7 @@ const Card = styled.div`
     0 3.9px 10px rgba(0, 0, 0, 0.02), 0 6.9px 17.9px rgba(0, 0, 0, 0.024),
     0 13px 33.4px rgba(0, 0, 0, 0.029), 0 31px 80px rgba(0, 0, 0, 0.04);
   padding: 6rem;
+  margin-bottom: 60px;
 `
 
 export default Card

@@ -20,8 +20,9 @@ const Wrapper = styled.div`
 `
 
 const Header = styled.header`
-  background: #fff;
+  background: rgba(255, 255, 255, 0.8);
   border-bottom: 1px solid #e5e7eb;
+  backdrop-filter: blur(6px);
   margin-bottom: 48px;
   padding: 16px 0;
   position: sticky;
@@ -34,8 +35,8 @@ const Header = styled.header`
   }
 
   .logo {
-    font-weight: 500;
-    font-size: 2.2rem;
+    font-weight: 400;
+    font-size: 2rem;
   }
 
   nav a:not(:last-child) {

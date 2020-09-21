@@ -12,6 +12,7 @@ const handleError = (err) => {
 exports.addClient = async (req, res) => {
   const data = req.body
   data.id = nanoid()
+  data.active = true
 
   await db.get('clients').push(data).write()
 

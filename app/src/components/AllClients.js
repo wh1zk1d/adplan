@@ -55,7 +55,11 @@ const AllClients = () => {
                 </td>
                 <td>{client.name}</td>
                 <td>{client.coverage}%</td>
-                <td>{client.cycle}</td>
+                <td>
+                  {client.cycle === '1' && 'A-Woche'}
+                  {client.cycle === '2' && 'B-Woche'}
+                  {client.cycle === '3' && 'Voll'}
+                </td>
                 <td>{client.spotLength}sek</td>
                 <td>{client.showInFoyer ? 'Ja' : 'Nein'}</td>
                 <td>
