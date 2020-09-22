@@ -20,9 +20,8 @@ const Wrapper = styled.div`
 `
 
 const Header = styled.header`
-  background: rgba(255, 255, 255, 0.8);
+  background: #fff;
   border-bottom: 1px solid #e5e7eb;
-  backdrop-filter: blur(6px);
   margin-bottom: 48px;
   padding: 16px 0;
   position: sticky;

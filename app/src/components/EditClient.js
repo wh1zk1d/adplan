@@ -5,27 +5,31 @@ import API from '../utils/api'
 import Card from './ui/Card'
 import { Error, Success } from './ui/Notifications'
 
-const AddClient = () => {
+const EditClient = (props) => {
+  const id = props.match.params.id
+  const [client] = useState(props.location.state.client)
   const [error, setError] = useState(false)
   const [submitting, setSubmitting] = useState(false)
   const [submitted, setSubmitted] = useState(false)
 
+  // Initialize Formik with values
   const formik = useFormik({
     initialValues: {
-      name: '',
-      coverage: '25',
-      cycle: '3',
-      spotLength: '',
-      showInFoyer: false,
-      startDate: '',
-      endDate: '',
-      costs: '',
-      contract: '',
+      active: client.active,
+      name: client.name,
+      coverage: client.coverage,
+      cycle: client.cycle,
+      spotLength: client.spotLength,
+      showInFoyer: client.showInFoyer,
+      startDate: client.startDate,
+      endDate: client.endDate,
+      costs: client.costs,
+      contract: client.contract,
     },
     onSubmit: async (values) => {
       setSubmitting(true)
       try {
-        await API.post('/clients', JSON.stringify(values))
+        await API.put(`/clients/${id}`, JSON.stringify(values))
         setError(false)
         setSubmitted(true)
       } catch {
@@ -38,9 +42,23 @@ const AddClient = () => {
 
   return (
     <Card>
-      <h1 className='page-title'>Kunde hinzufügen</h1>
+      <h2 className='page-title'>Kunde bearbeiten</h2>
 
       <form onSubmit={formik.handleSubmit}>
+        <div style={{ marginTop: '32px' }}>
+          <label htmlFor='active'>
+            <input
+              type='checkbox'
+              id='active'
+              name='active'
+              onChange={formik.handleChange}
+              value={formik.values.active}
+              checked={formik.values.active}
+            />{' '}
+            Aktiv
+          </label>
+        </div>
+
         <label htmlFor='name'>Name</label>
         <input
           id='name'
@@ -88,6 +106,7 @@ const AddClient = () => {
               name='showInFoyer'
               onChange={formik.handleChange}
               value={formik.values.showInFoyer}
+              checked={formik.values.showInFoyer}
             />{' '}
             Im Foyer zeigen
           </label>
@@ -135,10 +154,10 @@ const AddClient = () => {
         </button>
 
         {error && <Error>Ein Fehler ist aufgetreten</Error>}
-        {submitted && <Success>Kunde wurde gespeichert</Success>}
+        {submitted && <Success>Kunde wurde aktualisiert</Success>}
       </form>
     </Card>
   )
 }
 
-export default AddClient
+export default EditClient

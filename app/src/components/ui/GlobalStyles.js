@@ -91,7 +91,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   td, th {
-    padding: 16px;
+    padding: 10px;
   }
 
   th {
@@ -118,6 +118,21 @@ const GlobalStyle = createGlobalStyle`
     font-weight: 600;
   }
 
+  .icon {
+    width: 18px;
+  }
+
+  .delete-icon {
+    appearance: none;
+    background: none;
+    border: 0 none;
+    margin-left: 1rem;
+
+    &:focus {
+      outline: 0 none;
+    }
+  }
+
   /* FLEX/GRID */
   .flex-between {
     display: flex;
@@ -127,7 +142,7 @@ const GlobalStyle = createGlobalStyle`
 
   /* FORMS */
   input:not([type="checkbox"]), select {
-    border-radius: 6px;
+    border-radius: 4px;
     border: 1px solid #7a8a9a;
     color: inherit;
     display: block;
@@ -137,6 +152,7 @@ const GlobalStyle = createGlobalStyle`
 
     &:focus {
       outline: 0 none;
+      border: 1px solid var(--primary);
     }
   }
 

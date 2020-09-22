@@ -13,6 +13,16 @@ const AllClients = () => {
     return clients
   })
 
+  const handleDelete = async (id, name) => {
+    if (window.confirm(`Soll Kunde ${name} wirklich gelöscht werden?`)) {
+      try {
+        await API.delete(`/clients/${id}`)
+      } catch (err) {
+        alert(err.message)
+      }
+    }
+  }
+
   return (
     <Card>
       <div className='flex-between'>
@@ -41,6 +51,7 @@ const AllClients = () => {
               <th>Enddatum</th>
               <th>Kosten</th>
               <th>Vertrag</th>
+              <th>Aktionen</th>
             </tr>
           </thead>
           <tbody>
@@ -67,17 +78,71 @@ const AllClients = () => {
                     new Date(client.startDate)
                   )}
                 </td>
-                <td>{client.endDate ? client.endDate : 'Unbegrenzt'}</td>
+                <td>
+                  {client.endDate
+                    ? new Intl.DateTimeFormat('de-DE', { dateStyle: 'medium' }).format(
+                        new Date(client.endDate)
+                      )
+                    : 'Unbegrenzt'}
+                </td>
                 <td>{client.costs}€</td>
                 <td>
-                  <a
-                    href={process.env.REACT_APP_API_URL + '/contracts/' + client.contract}
-                    target='_blank'
-                    rel='noopener noreferrer'
-                    title='Vertrag anzeigen'
-                    className='underdotted'>
-                    Anzeigen
-                  </a>
+                  {client.contract ? (
+                    <a
+                      href={client.contract}
+                      target='_blank'
+                      rel='noopener noreferrer'
+                      title='Vertrag anzeigen'
+                      className='underdotted'>
+                      Anzeigen
+                    </a>
+                  ) : (
+                    '–'
+                  )}
+                </td>
+                <td>
+                  <Link
+                    to={{ pathname: `/edit/${client.id}`, state: { client: client } }}
+                    title='Bearbeiten'>
+                    <svg
+                      xmlns='http://www.w3.org/2000/svg'
+                      className='icon icon-tabler icon-tabler-edit'
+                      width='24'
+                      height='24'
+                      viewBox='0 0 24 24'
+                      strokeWidth='1.5'
+                      stroke='#1c64f2'
+                      fill='none'
+                      strokeLinecap='round'
+                      strokeLinejoin='round'>
+                      <path stroke='none' d='M0 0h24v24H0z' fill='none' />
+                      <path d='M9 7h-3a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-3' />
+                      <path d='M9 15h3l8.5 -8.5a1.5 1.5 0 0 0 -3 -3l-8.5 8.5v3' />
+                      <line x1='16' y1='5' x2='19' y2='8' />
+                    </svg>
+                  </Link>{' '}
+                  <button
+                    className='delete-icon'
+                    onClick={() => handleDelete(client.id, client.name)}>
+                    <svg
+                      xmlns='http://www.w3.org/2000/svg'
+                      className='icon icon-tabler icon-tabler-trash'
+                      width='24'
+                      height='24'
+                      viewBox='0 0 24 24'
+                      strokeWidth='1.5'
+                      stroke='#F44336'
+                      fill='none'
+                      strokeLinecap='round'
+                      strokeLinejoin='round'>
+                      <path stroke='none' d='M0 0h24v24H0z' fill='none' />
+                      <line x1='4' y1='7' x2='20' y2='7' />
+                      <line x1='10' y1='11' x2='10' y2='17' />
+                      <line x1='14' y1='11' x2='14' y2='17' />
+                      <path d='M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12' />
+                      <path d='M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3' />
+                    </svg>
+                  </button>
                 </td>
               </tr>
             ))}

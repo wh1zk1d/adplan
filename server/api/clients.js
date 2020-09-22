@@ -11,10 +11,10 @@ const {
 // Auth middleware
 const auth = require('../utils/auth')
 
-router.post('/', addClient)
+router.post('/', auth, addClient)
 router.get('/', auth, getAll)
-router.get('/:id', getOne)
-router.put('/:id', update)
-router.delete('/:id', remove)
+router.get('/:id', auth, getOne)
+router.put('/:id', auth, update)
+router.delete('/:id', auth, remove)
 
 module.exports = router
