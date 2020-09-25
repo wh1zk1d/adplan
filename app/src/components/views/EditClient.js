@@ -1,9 +1,8 @@
 import React, { useState } from 'react'
 import { useFormik } from 'formik'
-import API from '../utils/api'
+import API from '../../utils/api'
 
-import Card from './ui/Card'
-import { Error, Success } from './ui/Notifications'
+import { Error, Success } from '../ui/Notifications'
 
 const EditClient = (props) => {
   const id = props.match.params.id
@@ -41,7 +40,7 @@ const EditClient = (props) => {
   })
 
   return (
-    <Card>
+    <div>
       <h2 className='page-title'>Kunde bearbeiten</h2>
 
       <form onSubmit={formik.handleSubmit}>
@@ -156,7 +155,7 @@ const EditClient = (props) => {
         {error && <Error>Ein Fehler ist aufgetreten</Error>}
         {submitted && <Success>Kunde wurde aktualisiert</Success>}
       </form>
-    </Card>
+    </div>
   )
 }
 

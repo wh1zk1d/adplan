@@ -1,9 +1,8 @@
 import React, { useState } from 'react'
 import { useFormik } from 'formik'
-import API from '../utils/api'
+import API from '../../utils/api'
 
-import Card from './ui/Card'
-import { Error, Success } from './ui/Notifications'
+import { Error, Success } from '../ui/Notifications'
 
 const AddClient = () => {
   const [error, setError] = useState(false)
@@ -37,7 +36,7 @@ const AddClient = () => {
   })
 
   return (
-    <Card>
+    <div>
       <h1 className='page-title'>Kunde hinzufügen</h1>
 
       <form onSubmit={formik.handleSubmit}>
@@ -137,7 +136,7 @@ const AddClient = () => {
         {error && <Error>Ein Fehler ist aufgetreten</Error>}
         {submitted && <Success>Kunde wurde gespeichert</Success>}
       </form>
-    </Card>
+    </div>
   )
 }
 
