@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon server.js"
+    "start": "nodemon server.js --ignore db/db.json"
   },
   "author": "wh1zk1d",
   "license": "ISC",

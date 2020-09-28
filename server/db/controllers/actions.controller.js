@@ -5,6 +5,9 @@ const FileSync = require('lowdb/adapters/FileSync')
 const adapter = new FileSync('./db/db.json')
 const db = low(adapter)
 
+// Initialize DB with defaults
+db.defaults({ clients: [] }).write()
+
 const handleError = (err) => {
   return res.status(500).json({ success: false, msg: err.message || 'An error occured' })
 }
