@@ -17,7 +17,7 @@ const AllClients = () => {
   })
 
   return (
-    <Layout>
+    <div>
       <Headline>Dashboard</Headline>
 
       {error && 'Ein Fehler ist aufgetreten'}
@@ -99,7 +99,7 @@ const AllClients = () => {
           </tbody>
         </Table>
       )}
-    </Layout>
+    </div>
   )
 }
 

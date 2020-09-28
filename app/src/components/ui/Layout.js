@@ -10,7 +10,7 @@ import Navbar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav'
 
 const Header = () => {
-  const { isAuthenticated } = useAuth0()
+  const { isAuthenticated, user } = useAuth0()
 
   return (
     <Navbar bg='dark' variant='dark' expand='lg'>
@@ -21,17 +21,27 @@ const Header = () => {
         <Navbar.Toggle aria-controls='basic-navbar-nav' />
         <Navbar.Collapse id='basic-navbar-nav'>
           <Nav className='mr-auto'>
-            <NavLink to='/dashboard' className='nav-link'>
-              Dashboard
-            </NavLink>
-            <NavLink to='/add' className='nav-link'>
-              Kunde hinzufügen
-            </NavLink>
-            <NavLink to='/settings' className='nav-link'>
-              Einstellungen
-            </NavLink>
+            {isAuthenticated && (
+              <>
+                <NavLink to='/dashboard' className='nav-link'>
+                  Dashboard
+                </NavLink>
+                <NavLink to='/add' className='nav-link'>
+                  Kunde hinzufügen
+                </NavLink>
+                <NavLink to='/settings' className='nav-link'>
+                  Einstellungen
+                </NavLink>
+              </>
+            )}
           </Nav>
-          {isAuthenticated ? <LogoutBtn /> : <LoginBtn />}
+          {isAuthenticated ? (
+            <>
+              <img src={user.picture} alt={user.name} height='30' className='mr-3' /> <LogoutBtn />
+            </>
+          ) : (
+            <LoginBtn />
+          )}
         </Navbar.Collapse>
       </Container>
     </Navbar>
