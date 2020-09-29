@@ -3,7 +3,6 @@ import { useQuery } from 'react-query'
 import { Link } from 'react-router-dom'
 import API from '../../utils/api'
 
-import Layout from '../ui/Layout'
 import Headline from '../ui/Headline'
 
 import Table from 'react-bootstrap/Table'
@@ -61,16 +60,16 @@ const AllClients = () => {
                 <td>{client.spotLength}sek</td>
                 <td>{client.showInFoyer ? 'Ja' : 'Nein'}</td>
                 <td>
-                  {/* {new Intl.DateTimeFormat('de-DE', { dateStyle: 'medium' }).format(
+                  {new Intl.DateTimeFormat('de-DE', { dateStyle: 'medium' }).format(
                     new Date(client.startDate)
-                  )} */}
+                  )}
                 </td>
                 <td>
-                  {/* {client.endDate
+                  {client.endDate
                     ? new Intl.DateTimeFormat('de-DE', { dateStyle: 'medium' }).format(
                         new Date(client.endDate)
                       )
-                    : 'Unbegrenzt'} */}
+                    : 'Unbegrenzt'}
                 </td>
                 <td>{client.costs}€</td>
                 <td>

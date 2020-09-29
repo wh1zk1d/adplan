@@ -37,7 +37,7 @@ const Header = () => {
           </Nav>
           {isAuthenticated ? (
             <>
-              <img src={user.picture} alt={user.name} height='30' className='mr-3' /> <LogoutBtn />
+              <img src={user.picture} alt={user.name} height='32' className='mr-3' /> <LogoutBtn />
             </>
           ) : (
             <LoginBtn />

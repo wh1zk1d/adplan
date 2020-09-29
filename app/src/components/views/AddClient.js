@@ -3,6 +3,7 @@ import { useFormik } from 'formik'
 import API from '../../utils/api'
 
 import { Error, Success } from '../ui/Notifications'
+import Form from 'react-bootstrap/Form'
 
 const AddClient = () => {
   const [error, setError] = useState(false)
@@ -39,8 +40,18 @@ const AddClient = () => {
     <div>
       <h1 className='page-title'>Kunde hinzufügen</h1>
 
-      <form onSubmit={formik.handleSubmit}>
-        <label htmlFor='name'>Name</label>
+      <Form onSubmit={formik.handleSubmit}>
+        <Form.Group controlId='name'>
+          <Form.Label>Name</Form.Label>
+          <Form.Control
+            type='text'
+            placeholder='Name'
+            onChange={formik.handleChange}
+            value={formik.values.name}
+          />
+        </Form.Group>
+
+        {/* <label htmlFor='name'>Name</label>
         <input
           id='name'
           name='name'
@@ -48,7 +59,7 @@ const AddClient = () => {
           placeholder='Name'
           onChange={formik.handleChange}
           value={formik.values.name}
-        />
+        /> */}
 
         <label htmlFor='coverage'>Abdeckung</label>
         <select
@@ -135,7 +146,7 @@ const AddClient = () => {
 
         {error && <Error>Ein Fehler ist aufgetreten</Error>}
         {submitted && <Success>Kunde wurde gespeichert</Success>}
-      </form>
+      </Form>
     </div>
   )
 }

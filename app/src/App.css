@@ -1,3 +1,13 @@
+/* Active indicator in table */
+.active-yes {
+  color: green;
+}
+
+.active-no {
+  color: tomato;
+}
+
+/* Loading */
 .spinner {
   position: absolute;
   display: flex;
