@@ -1,8 +1,14 @@
 import React, { useState } from 'react'
 import { useFormik } from 'formik'
 import API from '../../utils/api'
+import { useHistory } from 'react-router-dom'
 
-import { Error, Success } from '../ui/Notifications'
+import Form from 'react-bootstrap/Form'
+import Col from 'react-bootstrap/Col'
+import InputGroup from 'react-bootstrap/InputGroup'
+import Button from 'react-bootstrap/Button'
+import Alert from 'react-bootstrap/Alert'
+import Headline from '../ui/Headline'
 
 const EditClient = (props) => {
   const id = props.match.params.id
@@ -10,6 +16,28 @@ const EditClient = (props) => {
   const [error, setError] = useState(false)
   const [submitting, setSubmitting] = useState(false)
   const [submitted, setSubmitted] = useState(false)
+  const [deleted, setDeleted] = useState(false)
+
+  const history = useHistory()
+
+  const onDelete = async () => {
+    if (window.confirm(`Soll ${client.name} wirklich gelöscht werden?`)) {
+      setSubmitting(true)
+      try {
+        await API.delete(`/clients/${id}`)
+        setError(false)
+        setDeleted(true)
+      } catch {
+        setError(true)
+        setDeleted(false)
+      }
+      setSubmitting(false)
+
+      setTimeout(() => {
+        history.push('/dashboard')
+      }, 1000)
+    }
+  }
 
   // Initialize Formik with values
   const formik = useFormik({
@@ -39,122 +67,150 @@ const EditClient = (props) => {
     },
   })
 
+  if (deleted) {
+    return (
+      <Alert variant='warning' className='mt-4'>
+        Kunde wurde gelöscht!
+      </Alert>
+    )
+  }
+
   return (
     <div>
-      <h2 className='page-title'>Kunde bearbeiten</h2>
+      <Headline>Kunde bearbeiten</Headline>
 
-      <form onSubmit={formik.handleSubmit}>
-        <div style={{ marginTop: '32px' }}>
-          <label htmlFor='active'>
-            <input
-              type='checkbox'
-              id='active'
-              name='active'
+      <Form onSubmit={formik.handleSubmit}>
+        <Form.Row>
+          <Form.Group controlId='name' as={Col} md='4'>
+            <Form.Label>Name</Form.Label>
+            <Form.Control
+              type='text'
+              placeholder='Name'
               onChange={formik.handleChange}
-              value={formik.values.active}
-              checked={formik.values.active}
-            />{' '}
-            Aktiv
-          </label>
-        </div>
+              value={formik.values.name}
+            />
+          </Form.Group>
 
-        <label htmlFor='name'>Name</label>
-        <input
-          id='name'
-          name='name'
-          type='text'
-          placeholder='Name'
-          onChange={formik.handleChange}
-          value={formik.values.name}
-        />
+          <Form.Group controlId='coverage' as={Col} md='4'>
+            <Form.Label>Abdeckung</Form.Label>
+            <Form.Control as='select' onChange={formik.handleChange} value={formik.values.coverage}>
+              <option value='25'>25%</option>
+              <option value='50'>50%</option>
+              <option value='75'>75%</option>
+              <option value='100'>100%</option>
+            </Form.Control>
+          </Form.Group>
+        </Form.Row>
 
-        <label htmlFor='coverage'>Abdeckung</label>
-        <select
-          id='coverage'
-          name='coverage'
-          onChange={formik.handleChange}
-          value={formik.values.coverage}>
-          <option value='25'>25%</option>
-          <option value='50'>50%</option>
-          <option value='75'>75%</option>
-          <option value='100'>100%</option>
-        </select>
+        <Form.Row>
+          <Form.Group controlId='cycle' as={Col} md='4'>
+            <Form.Label>Rhythmus</Form.Label>
+            <Form.Control as='select' onChange={formik.handleChange} value={formik.values.cycle}>
+              <option value='1'>A-Woche (gerade KW)</option>
+              <option value='2'>B-Woche (ungerade KW)</option>
+              <option value='3'>Voll</option>
+            </Form.Control>
+          </Form.Group>
 
-        <label htmlFor='cycle'>Rhythmus</label>
-        <select id='cycle' name='cycle' onChange={formik.handleChange} value={formik.values.cycle}>
-          <option value='1'>A-Woche (gerade KW)</option>
-          <option value='2'>B-Woche (ungerade KW)</option>
-          <option value='3'>Voll</option>
-        </select>
+          <Form.Group controlId='spotLength' as={Col} md='4'>
+            <Form.Label>Spotlänge (in Sekunden)</Form.Label>
+            <Form.Control
+              type='text'
+              placeholder='32'
+              onChange={formik.handleChange}
+              value={formik.values.spotLength}
+            />
+          </Form.Group>
+        </Form.Row>
 
-        <label htmlFor='spotLength'>Spotlänge (in Sekunden)</label>
-        <input
-          id='spotLength'
-          name='spotLength'
-          type='text'
-          placeholder='42'
-          onChange={formik.handleChange}
-          value={formik.values.spotLength}
-        />
+        <Form.Row>
+          <Form.Group controlId='startDate' as={Col} md='4'>
+            <Form.Label>Startdatum</Form.Label>
+            <Form.Control
+              type='date'
+              onChange={formik.handleChange}
+              value={formik.values.startDate}
+            />
+          </Form.Group>
 
-        <div style={{ marginTop: '32px' }}>
-          <label htmlFor='showInFoyer'>
-            <input
+          <Form.Group controlId='endDate' as={Col} md='4'>
+            <Form.Label>Enddatum</Form.Label>
+            <Form.Control
+              type='date'
+              onChange={formik.handleChange}
+              value={formik.values.endDate}
+            />
+          </Form.Group>
+        </Form.Row>
+
+        <Form.Row>
+          <Form.Group controlId='costs' as={Col} md='4'>
+            <Form.Label>Kosten</Form.Label>
+            <InputGroup>
+              <Form.Control
+                type='text'
+                placeholder='42,99'
+                onChange={formik.handleChange}
+                value={formik.values.costs}
+              />
+              <InputGroup.Append>
+                <InputGroup.Text>€</InputGroup.Text>
+              </InputGroup.Append>
+            </InputGroup>
+          </Form.Group>
+
+          <Form.Group controlId='contract' as={Col} md='4'>
+            <Form.Label>Link zum Vertrag</Form.Label>
+            <Form.Control
+              type='text'
+              placeholder='https://...'
+              onChange={formik.handleChange}
+              value={formik.values.contract}
+            />
+          </Form.Group>
+        </Form.Row>
+
+        <Form.Row>
+          <Form.Group controlId='showInFoyer' as={Col} md='4'>
+            <Form.Check
               type='checkbox'
-              id='showInFoyer'
-              name='showInFoyer'
+              label='Im Foyer zeigen'
               onChange={formik.handleChange}
               value={formik.values.showInFoyer}
               checked={formik.values.showInFoyer}
-            />{' '}
-            Im Foyer zeigen
-          </label>
-        </div>
+            />
+          </Form.Group>
 
-        <label htmlFor='startDate'>Startdatum</label>
-        <input
-          id='startDate'
-          name='startDate'
-          type='date'
-          onChange={formik.handleChange}
-          value={formik.values.startDate}
-        />
+          <Form.Group controlId='active' as={Col} md='4'>
+            <Form.Check
+              type='checkbox'
+              label='Aktiv'
+              onChange={formik.handleChange}
+              value={formik.values.active}
+              checked={formik.values.active}
+            />
+          </Form.Group>
+        </Form.Row>
 
-        <label htmlFor='endDate'>Enddatum</label>
-        <input
-          id='endDate'
-          name='endDate'
-          type='date'
-          onChange={formik.handleChange}
-          value={formik.values.endDate}
-        />
-
-        <label htmlFor='costs'>Kosten (€)</label>
-        <input
-          id='costs'
-          name='costs'
-          type='text'
-          placeholder='42'
-          onChange={formik.handleChange}
-          value={formik.values.costs}
-        />
-
-        <label htmlFor='contract'>Link zum Vertrag</label>
-        <input
-          id='contract'
-          name='contract'
-          type='text'
-          onChange={formik.handleChange}
-          value={formik.values.contract}
-        />
-
-        <button type='submit' disabled={submitting}>
+        <Button variant='primary' type='submit' disabled={submitting} className='my-2'>
           {submitting ? 'Lade...' : 'Speichern'}
-        </button>
+        </Button>
 
-        {error && <Error>Ein Fehler ist aufgetreten</Error>}
-        {submitted && <Success>Kunde wurde aktualisiert</Success>}
-      </form>
+        <Button variant='danger' className='ml-2' onClick={onDelete} disabled={submitting}>
+          Kunde löschen
+        </Button>
+
+        {error && (
+          <Alert variant='danger' className='mt-4'>
+            Ein Fehler ist aufgetreten
+          </Alert>
+        )}
+        {submitted && (
+          <Alert variant='success' className='mt-4'>
+            Kunde wurde gespeichert!
+          </Alert>
+        )}
+      </Form>
     </div>
   )
 }
