@@ -1,4 +1,4 @@
-// Endpoint to get all clients / a specific client
+// ? Endpoint to get all clients/a specific client
 const router = require('express').Router()
 const {
   addClient,
