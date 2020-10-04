@@ -17,9 +17,12 @@ router.use('/clients', clients)
 
 // Trigger report generation
 router.get('/report', auth, async (req, res) => {
-  await makeWeeklyReport()
-
-  res.status(200).json({ success: true, msg: 'Generated report' })
+  try {
+    await makeWeeklyReport()
+    res.status(200).json({ success: true, msg: 'Generated report' })
+  } catch (err) {
+    res.status(500).json({ success: false, msg: err.message })
+  }
 })
 
 module.exports = router

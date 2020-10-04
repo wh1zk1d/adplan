@@ -39,7 +39,12 @@ const getClips = async () => {
   })
 
   // Send the mail
-  await sendMail(clients, weekNumber, weekCycle)
+  try {
+    await sendMail(clients, weekNumber, weekCycle)
+  } catch (err) {
+    console.log(err)
+    throw new Error(err.message)
+  }
 }
 
 module.exports = getClips
