@@ -1,5 +1,7 @@
 // ? Get all clips from the DB that are due in the current week
 
+const sendMail = require('./sendMail')
+
 // Initialize DB connection
 const low = require('lowdb')
 const FileSync = require('lowdb/adapters/FileSync')
@@ -14,6 +16,7 @@ const { getWeekNumber, getWeekCycle } = require('./getWeekNumber')
 const getClips = async () => {
   let weekClients
   let weekCycle = getWeekCycle()
+  let weekNumber = getWeekNumber()
 
   // TODO: Filter out all where the current date is not between start and end
 
@@ -30,12 +33,13 @@ const getClips = async () => {
     weekClients = await db.get('clients').filter({ cycle: '2', active: true }).value()
   }
 
-  // Concat weekly and VIP clients
-  let clients = [...weekClients, ...vipClients]
+  // Concat weekly and VIP clients, and filter out unnecessary values
+  let clients = [...weekClients, ...vipClients].map((client) => {
+    return { name: client.name, duration: client.spotLength, showInFoyer: client.showInFoyer }
+  })
 
-  // Return a combined Array with both client groups
-  console.log(`\n## Kunden für KW${getWeekNumber()} ##`)
-  console.log(clients.map((client) => client.name))
+  // Send the mail
+  await sendMail(clients, weekNumber, weekCycle)
 }
 
 module.exports = getClips

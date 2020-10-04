@@ -9,6 +9,7 @@ const checkToken = (req, res, next) => {
 
   if (!token) {
     handleError()
+    return
   }
 
   if (token.startsWith('Bearer ')) {
