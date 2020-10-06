@@ -17,8 +17,7 @@ const AddClient = () => {
   const formik = useFormik({
     initialValues: {
       name: '',
-      coverage: '25',
-      cycle: '3',
+      coverage: '1',
       spotLength: '',
       showInFoyer: false,
       startDate: '',
@@ -47,7 +46,7 @@ const AddClient = () => {
       <Form onSubmit={formik.handleSubmit}>
         <Form.Row>
           <Form.Group controlId='name' as={Col} md='4'>
-            <Form.Label>Name</Form.Label>
+            <Form.Label>Kunde</Form.Label>
             <Form.Control
               type='text'
               placeholder='Name'
@@ -59,24 +58,15 @@ const AddClient = () => {
           <Form.Group controlId='coverage' as={Col} md='4'>
             <Form.Label>Abdeckung</Form.Label>
             <Form.Control as='select' onChange={formik.handleChange} value={formik.values.coverage}>
-              <option value='25'>25%</option>
-              <option value='50'>50%</option>
-              <option value='75'>75%</option>
-              <option value='100'>100%</option>
+              <option value='1'>25%</option>
+              <option value='2'>50%</option>
+              <option value='3'>75%</option>
+              <option value='4'>100%</option>
             </Form.Control>
           </Form.Group>
         </Form.Row>
 
         <Form.Row>
-          <Form.Group controlId='cycle' as={Col} md='4'>
-            <Form.Label>Rhythmus</Form.Label>
-            <Form.Control as='select' onChange={formik.handleChange} value={formik.values.cycle}>
-              <option value='1'>A-Woche (gerade KW)</option>
-              <option value='2'>B-Woche (ungerade KW)</option>
-              <option value='3'>Voll</option>
-            </Form.Control>
-          </Form.Group>
-
           <Form.Group controlId='spotLength' as={Col} md='4'>
             <Form.Label>Spotlänge (in Sekunden)</Form.Label>
             <Form.Control
@@ -85,6 +75,21 @@ const AddClient = () => {
               onChange={formik.handleChange}
               value={formik.values.spotLength}
             />
+          </Form.Group>
+
+          <Form.Group controlId='costs' as={Col} md='4'>
+            <Form.Label>Kosten (netto)</Form.Label>
+            <InputGroup>
+              <Form.Control
+                type='text'
+                placeholder='42,99'
+                onChange={formik.handleChange}
+                value={formik.values.costs}
+              />
+              <InputGroup.Append>
+                <InputGroup.Text>€</InputGroup.Text>
+              </InputGroup.Append>
+            </InputGroup>
           </Form.Group>
         </Form.Row>
 
@@ -109,21 +114,6 @@ const AddClient = () => {
         </Form.Row>
 
         <Form.Row>
-          <Form.Group controlId='costs' as={Col} md='4'>
-            <Form.Label>Kosten</Form.Label>
-            <InputGroup>
-              <Form.Control
-                type='text'
-                placeholder='42,99'
-                onChange={formik.handleChange}
-                value={formik.values.costs}
-              />
-              <InputGroup.Append>
-                <InputGroup.Text>€</InputGroup.Text>
-              </InputGroup.Append>
-            </InputGroup>
-          </Form.Group>
-
           <Form.Group controlId='contract' as={Col} md='4'>
             <Form.Label>Link zum Vertrag</Form.Label>
             <Form.Control

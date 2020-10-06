@@ -30,7 +30,6 @@ const AllClients = () => {
               <th>Aktiv</th>
               <th>Kunde</th>
               <th>Abdeckung</th>
-              <th>Rhythmus</th>
               <th>Spotlänge</th>
               <th>Foyer</th>
               <th>Startdatum</th>
@@ -51,11 +50,11 @@ const AllClients = () => {
                   )}
                 </td>
                 <td>{client.name}</td>
-                <td>{client.coverage}%</td>
                 <td>
-                  {client.cycle === '1' && 'A-Woche'}
-                  {client.cycle === '2' && 'B-Woche'}
-                  {client.cycle === '3' && 'Voll'}
+                  {client.coverage === '1' && '25%'}
+                  {client.coverage === '2' && '50%'}
+                  {client.coverage === '3' && '75%'}
+                  {client.coverage === '4' && '100%'}
                 </td>
                 <td>{client.spotLength}sek</td>
                 <td>{client.showInFoyer ? 'Ja' : 'Nein'}</td>
