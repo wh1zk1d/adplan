@@ -6,7 +6,7 @@ const adapter = new FileSync('./db/db.json')
 const db = low(adapter)
 
 // Initialize DB with defaults
-db.defaults({ clients: [] }).write()
+db.defaults({ clients: [], week: '1' }).write()
 
 const handleError = (err) => {
   return res.status(500).json({ success: false, msg: err.message || 'An error occured' })
@@ -19,7 +19,7 @@ exports.addClient = async (req, res) => {
 
   await db.get('clients').push(data).write()
 
-  res.status(200).json({ success: true, msg: 'added client' })
+  res.status(200).json({ success: true, msg: 'Added client' })
 }
 
 exports.getAll = async (req, res) => {
@@ -50,7 +50,7 @@ exports.update = async (req, res) => {
 
   try {
     await db.get('clients').find({ id: id }).assign(data).write()
-    res.status(200).json({ success: true, msg: 'updated client' })
+    res.status(200).json({ success: true, msg: 'Updated client' })
   } catch {
     res.status(500).json({ success: false, msg: 'An error occured' })
   }
@@ -61,7 +61,7 @@ exports.remove = async (req, res) => {
 
   try {
     await db.get('clients').remove({ id: id }).write()
-    res.status(200).json({ success: true, msg: 'deleted client' })
+    res.status(200).json({ success: true, msg: 'Deleted client' })
   } catch {
     res.status(500).json({ success: false, msg: 'An error occured' })
   }
